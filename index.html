@@ -1,0 +1,445 @@
+<title>Marharyta Shcharbina</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Project Manager в финтехе: мобильное приложение, веб-платформа, сайт и админка UAA криптобиржи Dzengi.com.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky nav, hero with a live sprint board, stat strip, four numbered sections with process diagrams */
+:root{
+  --bg:#f4f5f7; --bg2:#eceef2; --surface:#ffffff; --text:#151a24; --muted:#5d6574;
+  --accent:#c4620a; --accent2:#1f8a7f; --line:#dde1e8; --glow:rgba(196,98,10,.12);
+  --display:"Unbounded","Segoe UI",system-ui,sans-serif;
+  --sans:"Onest",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10141c; --bg2:#151b25; --surface:#19202b; --text:#ecf0f5; --muted:#9aa4b3;
+    --accent:#f2a54a; --accent2:#4fc4b6; --line:#273041; --glow:rgba(242,165,74,.16);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10141c; --bg2:#151b25; --surface:#19202b; --text:#ecf0f5; --muted:#9aa4b3;
+  --accent:#f2a54a; --accent2:#4fc4b6; --line:#273041; --glow:rgba(242,165,74,.16);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg);color:var(--text);font:17px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:11;background:var(--bg)}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;width:100%;
+  padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.grid>*,.two>*,.stats>*,.how>*,.tool>*,.figs>*{min-width:0}
+p,h1,h2,h3,li,dd{overflow-wrap:break-word}
+
+/* nav */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;backdrop-filter:blur(14px);
+  background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.logo{font-family:var(--display);font-weight:700;font-size:17px;color:var(--text);text-decoration:none;letter-spacing:.02em}
+.logo i{color:var(--accent);font-style:normal}
+nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0}
+nav::-webkit-scrollbar{display:none}
+nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:6px 12px;border-radius:999px;white-space:nowrap}
+nav a:hover{color:var(--text)}
+nav a.on{color:var(--text);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+
+/* hero */
+.hero{position:relative;padding-block:80px 64px;overflow:hidden}
+.hero::before{content:"";position:absolute;width:460px;height:460px;border-radius:50%;background:var(--accent);
+  opacity:.10;filter:blur(90px);top:-160px;right:-120px;pointer-events:none}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;position:relative}
+.avatar{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;margin-bottom:20px;
+  font-family:var(--display);font-weight:700;font-size:28px;color:var(--surface);
+  background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 10px 30px var(--glow)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--accent)}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,7vw,72px);line-height:1.02;margin:18px 0;letter-spacing:-.02em;text-wrap:balance}
+.hero h1 span{color:var(--accent)}
+.lead{max-width:600px;font-size:clamp(17px,2.2vw,21px);color:var(--muted);margin:0 0 26px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.chips li{border:1px solid var(--line);background:var(--surface);padding:6px 14px;border-radius:999px;font-size:14px}
+
+/* hero board */
+.board-art{width:100%;max-width:440px;justify-self:end}
+.board-art svg{width:100%;height:auto;display:block}
+.board-art .col{fill:var(--bg2);stroke:var(--line);stroke-width:1.2}
+.board-art .hd{fill:var(--muted);font:600 10px var(--mono);letter-spacing:.08em;text-anchor:middle}
+.board-art .cd{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+.board-art .cd.hot{stroke:var(--accent);stroke-width:1.8}
+.board-art .ck{fill:var(--text);font:600 11px var(--mono)}
+.board-art .tg{fill:var(--muted);font:10px var(--sans)}
+.board-art .bar{fill:var(--accent)}
+.board-art .bar2{fill:var(--accent2)}
+.board-art .done{fill:var(--accent2)}
+.board-art .mover{animation:move 6s ease-in-out infinite}
+@keyframes move{0%,30%{transform:translateX(0)}55%,100%{transform:translateX(105px)}}
+@media(max-width:860px){.hero .wrap{grid-template-columns:1fr}.board-art{max-width:360px;justify-self:start}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.stat{background:var(--surface);padding:22px}
+.stat b{display:block;font-family:var(--display);font-size:clamp(26px,3.6vw,38px);line-height:1.1;color:var(--accent);margin-bottom:6px;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:14px}
+@media(max-width:760px){.stats{grid-template-columns:1fr 1fr}}
+
+/* sections */
+section{padding-top:88px}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px}
+.sec-head .n{font-family:var(--mono);color:var(--accent);font-size:14px}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(26px,4.4vw,40px);line-height:1.1;margin:0;letter-spacing:-.01em}
+.two{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+.two p{margin:0 0 16px;color:var(--muted)}
+.two p:first-child{color:var(--text);font-size:19px}
+.facts-box{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 24px}
+.facts-box dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:12px 18px;font-size:15px}
+.facts-box dt{color:var(--muted)}
+.facts-box dd{margin:0}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 14px 40px var(--glow)}
+.card .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--glow);border:1px solid var(--line);margin-bottom:14px}
+.card .ic svg{width:22px;height:22px;color:var(--accent)}
+.card h3{font-family:var(--display);font-weight:500;font-size:18px;margin:0 0 8px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .team{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--accent2)}
+
+/* figures */
+.fig{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px}
+.fig h3{font-family:var(--display);font-weight:500;font-size:18px;margin:0 0 4px}
+.fig>p{margin:0 0 16px;color:var(--muted);font-size:15px}
+.fig svg{width:100%;height:auto;display:block}
+.fig .b{fill:var(--bg2);stroke:var(--line);stroke-width:1.5}
+.fig .b.a{fill:var(--glow);stroke:var(--accent)}
+.fig .l{fill:var(--text);font:600 14px var(--sans);text-anchor:middle}
+.fig .s{fill:var(--muted);font:12.5px var(--sans);text-anchor:middle}
+.fig .ar{stroke:var(--accent);stroke-width:2;fill:none}
+.fig .ah{fill:var(--accent)}
+.fig .ln{stroke:var(--muted);stroke-width:1.5;fill:none}
+.fig .dash{stroke:var(--line);stroke-width:1.5;stroke-dasharray:4 4;fill:none}
+.fig .sm{fill:var(--accent2);font:600 12px var(--sans);text-anchor:middle}
+.fig .dot{fill:var(--accent)}
+.fig .cl{fill:var(--text);font:600 15px var(--sans);text-anchor:middle}
+.fig .st{text-anchor:start}
+.mt{margin-top:36px}
+.figs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media(max-width:860px){.figs{grid-template-columns:1fr}}
+.only-m{display:none}
+@media(max-width:560px){.only-d{display:none}.only-m{display:block}}
+
+/* tools */
+.tools{display:grid;margin-top:36px}
+.tool{display:grid;grid-template-columns:200px 1fr;gap:12px;align-items:start;padding:16px 0;border-top:1px solid var(--line)}
+.tool h4{margin:0;font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{background:var(--bg2);border:1px solid var(--line);padding:4px 12px;border-radius:8px;font-size:14px}
+@media(max-width:620px){.tool{grid-template-columns:1fr}}
+
+/* timeline */
+.timeline{position:relative;margin:28px 0 0;padding:0 0 0 28px;list-style:none}
+.timeline::before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--accent),var(--accent2));opacity:.5}
+.timeline li{position:relative;padding-bottom:30px}
+.timeline li::before{content:"";position:absolute;left:-28px;top:8px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--accent)}
+.timeline .when{font-family:var(--mono);font-size:13px;color:var(--accent);font-variant-numeric:tabular-nums}
+.timeline h3{font-family:var(--display);font-weight:500;font-size:20px;margin:4px 0 2px}
+.timeline p{margin:0;color:var(--muted)}
+.edu{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.edu .card h3{font-size:16px}
+
+/* how */
+.how{counter-reset:h;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;list-style:none;margin:0;padding:0}
+.how li{counter-increment:h;display:flex;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:16px}
+.how li::before{content:counter(h,decimal-leading-zero);font-family:var(--mono);color:var(--accent);font-size:15px;flex:none;padding-top:2px}
+
+/* contacts + footer */
+.contacts{display:grid;gap:10px;margin-top:8px}
+.contact{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.contact b{width:84px;font-size:13px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.contact .val{font-family:var(--mono);font-size:15px;user-select:all;min-width:0;overflow-wrap:anywhere}
+.copy{font:inherit;font-size:13px;padding:3px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);cursor:pointer}
+.copy:hover{color:var(--accent);border-color:var(--accent)}
+footer{margin-top:96px;padding-block:40px 56px;border-top:1px solid var(--line);color:var(--muted);font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between}
+
+@media(max-width:560px){
+  body{font-size:16px}
+  .logo{display:none}
+  .hero{padding-block:48px 40px}
+  section{padding-top:64px}
+  .grid,.how{grid-template-columns:1fr}
+  .facts-box dl{grid-template-columns:1fr;gap:2px}
+  .facts-box dt{margin-top:10px;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .board-art .mover{animation:none}
+  .card{transition:none}
+}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top">M<i>.</i>S</a>
+    <nav id="nav">
+      <a href="#about">Обо мне</a>
+      <a href="#projects">Проекты</a>
+      <a href="#path">Путь</a>
+      <a href="#work">Формат</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <div class="avatar" aria-hidden="true">MS</div>
+        <div class="eyebrow">Project Manager · Fintech · Warsaw</div>
+        <h1>Marharyta<br><span>Shcharbina</span></h1>
+        <p class="lead">Веду разработку продуктов криптобиржи Dzengi.com: мобильное приложение, веб-платформу, сайт и внутреннюю админку UAA. Собираю требования, наполняю бэклог и довожу задачи до релиза.</p>
+        <ul class="chips">
+          <li>Scrum и Kanban</li><li>Jira для всей компании</li><li>Требования</li><li>Локализация</li><li>Еженедельные отчёты</li>
+        </ul>
+      </div>
+      <div class="board-art" aria-hidden="true">
+        <svg viewBox="0 0 440 330">
+          <rect class="col" x="4" y="4" width="100" height="322" rx="12"/>
+          <rect class="col" x="113" y="4" width="100" height="322" rx="12"/>
+          <rect class="col" x="222" y="4" width="100" height="322" rx="12"/>
+          <rect class="col" x="331" y="4" width="105" height="322" rx="12"/>
+          <text class="hd" x="54" y="26">BACKLOG</text><text class="hd" x="163" y="26">IN PROGRESS</text>
+          <text class="hd" x="272" y="26">QA</text><text class="hd" x="383" y="26">DONE</text>
+
+          <rect class="cd" x="12" y="40" width="84" height="56" rx="8"/><text class="ck" x="20" y="60">WEB-41</text><text class="tg" x="20" y="78">веб-платформа</text>
+          <rect class="cd" x="12" y="104" width="84" height="56" rx="8"/><text class="ck" x="20" y="124">SITE-12</text><text class="tg" x="20" y="142">лендинг</text>
+          <rect class="cd" x="12" y="168" width="84" height="56" rx="8"/><text class="ck" x="20" y="188">APP-88</text><text class="tg" x="20" y="206">локализация</text>
+
+          <rect class="cd" x="121" y="40" width="84" height="56" rx="8"/><text class="ck" x="129" y="60">UAA-17</text><text class="tg" x="129" y="78">верификация</text>
+          <rect class="bar" x="129" y="86" width="50" height="3" rx="1.5"/>
+          <rect class="cd" x="121" y="104" width="84" height="56" rx="8"/><text class="ck" x="129" y="124">APP-91</text><text class="tg" x="129" y="142">портфель</text>
+          <rect class="bar" x="129" y="150" width="30" height="3" rx="1.5"/>
+
+          <g class="mover">
+            <rect class="cd hot" x="230" y="40" width="84" height="56" rx="8"/><text class="ck" x="238" y="60">APP-85</text><text class="tg" x="238" y="78">билд 3.4</text>
+            <rect class="bar2" x="238" y="86" width="68" height="3" rx="1.5"/>
+          </g>
+          <rect class="cd" x="230" y="104" width="84" height="56" rx="8"/><text class="ck" x="238" y="124">UAA-15</text><text class="tg" x="238" y="142">транзакции</text>
+
+          <rect class="cd" x="339" y="104" width="89" height="56" rx="8"/><text class="ck" x="347" y="124">SITE-09</text><text class="tg" x="347" y="142">главная</text>
+          <circle class="done" cx="418" cy="116" r="4"/>
+          <rect class="cd" x="339" y="168" width="89" height="56" rx="8"/><text class="ck" x="347" y="188">UAA-11</text><text class="tg" x="347" y="206">поиск клиента</text>
+          <circle class="done" cx="418" cy="180" r="4"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><b>5 лет</b><span>в финтехе и криптопродуктах</span></div>
+      <div class="stat"><b>11</b><span>человек в командах: backend, frontend, QA, сайт</span></div>
+      <div class="stat"><b>4</b><span>продукта: приложение, веб-платформа, сайт, UAA</span></div>
+      <div class="stat"><b>C1</b><span>английский, плюс китайский из университета</span></div>
+    </div>
+
+    <section id="about">
+      <div class="sec-head"><span class="n">01</span><h2>Обо мне</h2></div>
+      <div class="two">
+        <div>
+          <p>Я Project Manager в DZ Investments Poland. Компания делает криптобиржу токенизированных активов Dzengi.com.</p>
+          <p>Отвечаю за то, чтобы frontend, backend, дизайн и маркетинг работали как одна команда, а сроки релизов были предсказуемыми. Внедрила принципы Agile и перевела проект мобильного приложения на работу спринтами.</p>
+          <p>В компанию пришла в поддержку клиентов, потом стала бизнес-аналитиком, с 2024 года веду проекты. Поэтому знаю продукт со стороны клиента, требований и разработки.</p>
+        </div>
+        <div class="facts-box">
+          <dl>
+            <dt>Роль</dt><dd>Project Manager</dd>
+            <dt>Компания</dt><dd>DZ Investments Poland · Dzengi.com</dd>
+            <dt>Где</dt><dd>Варшава, Польша</dd>
+            <dt>Методологии</dt><dd>Scrum, Kanban</dd>
+            <dt>Языки</dt><dd>RU, BY: родные · EN: C1</dd>
+            <dt>Образование</dt><dd>Магистр, МГЛУ</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="sec-head"><span class="n">02</span><h2>Проекты</h2></div>
+      <div class="grid">
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h5M8 16h8"/></svg></div>
+          <h3>UAA: админка для работы с клиентами</h3>
+          <p>Внутренний инструмент для поддержки, продаж, бэк-офиса и риск-команды: верификация, транзакции и полная информация по счетам клиентов. Пишу требования, создаю задачи, консультирую разработчиков и QA, проверяю UI на каждом этапе.</p>
+          <span class="team">2 backend · 1 frontend · QA</span>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+          <h3>Мобильное приложение Dzengi.com</h3>
+          <p>Координирую разработку вместе с дизайнером. Наполняю бэклог, веду в Jira каждый билд и спринт, готовлю и перепроверяю все локализации, отвечаю на вопросы разработки и QA.</p>
+          <span class="team">4 frontend · 3 QA · дизайнер</span>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <h3>Веб-платформа Dzengi.com</h3>
+          <p>Запустила разработку веб-версии торговой платформы. Тот же цикл: требования, бэклог, спринты, проверка дизайна и локализаций.</p>
+          <span class="team">frontend · дизайнер</span>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>
+          <h3>Сайт dzengi.com</h3>
+          <p>Новая структура и внешний вид сайта, новые страницы и лендинги. Согласовываю тексты и дизайн, изменения согласую с юристами и маркетингом.</p>
+          <span class="team">frontend · HTML · дизайнер</span>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></div>
+          <h3>Jira для всей компании</h3>
+          <p>Настраиваю и оптимизирую Jira для всей компании и отдельно для каждого проекта, управляю доступами.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="M8 15v-4M12 15V8M16 15v-6"/></svg></div>
+          <h3>Отчёты для руководства</h3>
+          <p>Каждую неделю готовлю отчёт по каждому проекту и каждой команде для своего руководителя.</p>
+        </div>
+      </div>
+
+      <figure class="fig mt">
+        <h3>Путь задачи от идеи до релиза</h3>
+        <p>Так задачи проходят через мои проекты.</p>
+        <svg class="only-d" viewBox="0 0 760 120" role="img" aria-label="Требования, бэклог, спринт, разработка и QA, релиз">
+          <rect class="b" x="2" y="22" width="128" height="76" rx="14"/><text class="l" x="66" y="56">Требования</text><text class="s" x="66" y="76">от стейкхолдеров</text>
+          <path class="ar" d="M134 60h16"/><path class="ah" d="M150 54l10 6-10 6z"/>
+          <rect class="b" x="160" y="22" width="128" height="76" rx="14"/><text class="l" x="224" y="56">Бэклог</text><text class="s" x="224" y="76">задачи в Jira</text>
+          <path class="ar" d="M292 60h16"/><path class="ah" d="M308 54l10 6-10 6z"/>
+          <rect class="b" x="318" y="22" width="128" height="76" rx="14"/><text class="l" x="382" y="56">Спринт</text><text class="s" x="382" y="76">план и приоритеты</text>
+          <path class="ar" d="M450 60h16"/><path class="ah" d="M466 54l10 6-10 6z"/>
+          <rect class="b" x="476" y="22" width="128" height="76" rx="14"/><text class="l" x="540" y="56">Разработка, QA</text><text class="s" x="540" y="76">проверка UI</text>
+          <path class="ar" d="M608 60h16"/><path class="ah" d="M624 54l10 6-10 6z"/>
+          <rect class="b a" x="634" y="22" width="124" height="76" rx="14"/><text class="l" x="696" y="56">Релиз</text><text class="s" x="696" y="76">и отчёт</text>
+        </svg>
+        <svg class="only-m" viewBox="0 0 300 420" role="img" aria-label="Требования, бэклог, спринт, разработка и QA, релиз">
+          <rect class="b" x="30" y="4" width="240" height="64" rx="14"/><text class="l" x="150" y="32">Требования</text><text class="s" x="150" y="52">от стейкхолдеров</text>
+          <path class="ar" d="M150 70v10"/><path class="ah" d="M144 80l6 10 6-10z"/>
+          <rect class="b" x="30" y="92" width="240" height="64" rx="14"/><text class="l" x="150" y="120">Бэклог</text><text class="s" x="150" y="140">задачи в Jira</text>
+          <path class="ar" d="M150 158v10"/><path class="ah" d="M144 168l6 10 6-10z"/>
+          <rect class="b" x="30" y="180" width="240" height="64" rx="14"/><text class="l" x="150" y="208">Спринт</text><text class="s" x="150" y="228">план и приоритеты</text>
+          <path class="ar" d="M150 246v10"/><path class="ah" d="M144 256l6 10 6-10z"/>
+          <rect class="b" x="30" y="268" width="240" height="64" rx="14"/><text class="l" x="150" y="296">Разработка, QA</text><text class="s" x="150" y="316">проверка UI</text>
+          <path class="ar" d="M150 334v10"/><path class="ah" d="M144 344l6 10 6-10z"/>
+          <rect class="b a" x="30" y="356" width="240" height="60" rx="14"/><text class="l" x="150" y="382">Релиз</text><text class="s" x="150" y="402">и отчёт</text>
+        </svg>
+      </figure>
+
+      <div class="figs">
+        <figure class="fig">
+          <h3>С кем я работаю</h3>
+          <p>Команды, которые я веду или координирую.</p>
+          <svg viewBox="0 0 360 260" role="img" aria-label="PM в центре, вокруг backend, frontend, QA, сайт и дизайн">
+            <path class="ln" d="M180 130L70 50M180 130L290 50M180 130L50 140M180 130L310 140M180 130L180 225"/>
+            <rect class="b a" x="125" y="106" width="110" height="48" rx="14"/><text class="l" x="180" y="135">PM</text>
+            <rect class="b" x="12" y="26" width="116" height="48" rx="12"/><text class="l" x="70" y="47">Backend</text><text class="s" x="70" y="64">2 человека</text>
+            <rect class="b" x="232" y="26" width="116" height="48" rx="12"/><text class="l" x="290" y="47">Frontend</text><text class="s" x="290" y="64">4 человека</text>
+            <rect class="b" x="2" y="118" width="96" height="48" rx="12"/><text class="l" x="50" y="139">QA</text><text class="s" x="50" y="156">3 человека</text>
+            <rect class="b" x="262" y="118" width="96" height="48" rx="12"/><text class="l" x="310" y="139">Сайт</text><text class="s" x="310" y="156">2 человека</text>
+            <rect class="b" x="110" y="204" width="140" height="48" rx="12"/><text class="l" x="180" y="225">Дизайн, юристы,</text><text class="s" x="180" y="242">маркетинг</text>
+          </svg>
+        </figure>
+        <figure class="fig">
+          <h3>Цикл мобильного билда</h3>
+          <p>Что я проверяю перед каждым релизом приложения.</p>
+          <svg viewBox="0 0 360 260" role="img" aria-label="Бэклог билда, спринт, локализации, QA и проверка UI, релиз">
+            <path class="ln" d="M40 30v200"/>
+            <circle class="dot" cx="40" cy="30" r="9"/><text class="l st" x="64" y="35">Бэклог билда</text><text class="s st" x="64" y="52">состав и приоритеты в Jira</text>
+            <circle class="dot" cx="40" cy="80" r="9"/><text class="l st" x="64" y="85">Спринт</text><text class="s st" x="64" y="102">frontend и дизайнер</text>
+            <circle class="dot" cx="40" cy="130" r="9"/><text class="l st" x="64" y="135">Локализации</text><text class="s st" x="64" y="152">готовлю и перепроверяю тексты</text>
+            <circle class="dot" cx="40" cy="180" r="9"/><text class="l st" x="64" y="185">QA и проверка UI</text><text class="s st" x="64" y="202">отвечаю на вопросы команды</text>
+            <circle class="dot" cx="40" cy="230" r="9"/><text class="l st" x="64" y="235">Релиз</text><text class="s st" x="64" y="252">и отчёт руководителю</text>
+          </svg>
+        </figure>
+      </div>
+
+      <div class="tools">
+        <div class="tool"><h4>Задачи и документация</h4><div class="tags"><span>Jira (полное администрирование)</span><span>Confluence</span><span>Asana</span><span>GitLab</span></div></div>
+        <div class="tool"><h4>Дизайн и схемы</h4><div class="tags"><span>Figma</span><span>Miro</span></div></div>
+        <div class="tool"><h4>Отчёты</h4><div class="tags"><span>Excel</span><span>Google Sheets</span><span>Google Docs</span></div></div>
+        <div class="tool"><h4>Поддержка</h4><div class="tags"><span>Zendesk</span><span>3CX</span><span>Kaizo</span></div></div>
+      </div>
+    </section>
+
+    <section id="path">
+      <div class="sec-head"><span class="n">03</span><h2>Путь</h2></div>
+      <figure class="fig">
+        <svg class="only-d" viewBox="0 0 760 130" role="img" aria-label="Маршрут: Минск, затем Варшава">
+          <path class="dash" d="M150 88C300 -10 460 -10 610 88"/>
+          <circle class="dot" cx="150" cy="88" r="9"/><circle class="dot" cx="610" cy="88" r="9"/>
+          <text class="cl" x="150" y="118">Минск</text><text class="s" x="150" y="40">МГЛУ, старт в Currency.com</text>
+          <text class="cl" x="610" y="118">Варшава</text><text class="s" x="610" y="40">DZ Investments Poland</text>
+          <text class="sm" x="380" y="118">поддержка → аналитика → проекты</text>
+        </svg>
+        <svg class="only-m" viewBox="0 0 300 190" role="img" aria-label="Маршрут: Минск, затем Варшава">
+          <path class="dash" d="M60 40C20 90 20 110 60 150"/>
+          <circle class="dot" cx="60" cy="36" r="9"/><circle class="dot" cx="60" cy="154" r="9"/>
+          <text class="cl st" x="84" y="34">Минск</text><text class="s st" x="84" y="54">МГЛУ, старт в Currency.com</text>
+          <text class="s st" x="84" y="100">поддержка → аналитика → проекты</text>
+          <text class="cl st" x="84" y="152">Варшава</text><text class="s st" x="84" y="172">DZ Investments Poland</text>
+        </svg>
+      </figure>
+      <ol class="timeline">
+        <li><div class="when">12/2024 — сейчас</div><h3>Project Manager</h3><p>DZ Investments Poland · Варшава. UAA, мобильное приложение, веб-платформа, сайт.</p></li>
+        <li><div class="when">12/2023 — 12/2024</div><h3>Business Analyst</h3><p>DZ Investments Poland · Варшава. Требования, user stories и критерии приёмки в Jira, документация в Confluence.</p></li>
+        <li><div class="when">04/2021 — 12/2023</div><h3>Customer Support Officer</h3><p>Currency.com · Минск и Варшава. Рейтинг ответов выше 95% в Kaizo, отзывы в Trustpilot, App Store и Google Play, наставничество новых сотрудников.</p></li>
+        <li><div class="when">09/2020 — 03/2021</div><h3>Преподаватель грамматики английского</h3><p>Минский государственный лингвистический университет</p></li>
+      </ol>
+      <div class="edu">
+        <div class="card"><h3>МГЛУ, магистратура</h3><p>Информационно-аналитическое обеспечение межкультурной коммуникации · 2020 — 2021</p></div>
+        <div class="card"><h3>МГЛУ, бакалавриат</h3><p>Лингвистика: английский и китайский · 2015 — 2020</p></div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="sec-head"><span class="n">04</span><h2>Как со мной работать</h2></div>
+      <ol class="how">
+        <li>Сначала требования, потом разработка. Вопросы закрываем до старта спринта.</li>
+        <li>Каждая задача в Jira: с описанием, критериями приёмки и исполнителем.</li>
+        <li>Вопросы по функциональности задавайте мне напрямую, отвечу и разработке, и QA.</li>
+        <li>UI проверяю на каждом этапе, а не только перед релизом.</li>
+        <li>Тексты и локализации перепроверяю до выхода билда.</li>
+        <li>Изменения на сайте согласуем с юристами и маркетингом заранее.</li>
+        <li>Раз в неделю отчёт: что сделано, что в работе, где риски.</li>
+      </ol>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© Marharyta Shcharbina · Варшава, Польша</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var el=document.getElementById(btn.dataset.target), text=el.textContent.trim();
+      var done=function(){btn.textContent='Скопировано';setTimeout(function(){btn.textContent='Копировать';},1500);};
+      var fallback=function(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Выделено';};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,fallback);}else{fallback();}
+    });
+  });
+  var links=[].slice.call(document.querySelectorAll('#nav a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function spy(){
+    var y=scrollY+120,cur=-1;
+    secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i;});
+    links.forEach(function(a,i){a.classList.toggle('on',i===cur);});
+  }
+  addEventListener('scroll',spy,{passive:true});spy();
+})();
+</script>
