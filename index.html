@@ -157,6 +157,15 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(26px,4.4vw,40px);l
 .how li{counter-increment:h;display:flex;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:16px}
 .how li::before{content:counter(h,decimal-leading-zero);font-family:var(--mono);color:var(--accent);font-size:15px;flex:none;padding-top:2px}
 
+
+/* translator */
+.tr{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;margin-top:8px}
+.tr button{font:inherit;text-align:left;cursor:pointer;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-height:120px;transition:border-color .2s,transform .2s}
+.tr button:hover{border-color:var(--accent);transform:translateY(-2px)}
+.tr .lang{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.tr button.dev .lang{color:var(--accent2)}
+.tr .hint{margin-top:auto;font-size:13px;color:var(--muted)}
+.lead{color:var(--muted);margin:0 0 4px}
 /* contacts + footer */
 .contacts{display:grid;gap:10px;margin-top:8px}
 .contact{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -267,6 +276,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-bet
           </dl>
         </div>
       </div>
+    </section>
+
+    <section id="translator">
+      <div class="sec-head"><span class="n">★</span><h2>Словарь переводчика</h2></div>
+      <p class="lead">Я лингвист, который переводит смысл между бизнесом и разработкой. Шуточный мини-словарь:</p>
+      <div class="tr"><button type="button" class="biz"><span class="lang">Язык бизнеса</span><span class="txt" data-b="Это же быстро, там делать нечего" data-d="Критерии приёмки не описаны, оценки нет, срок «вчера».">«Это же быстро, там делать нечего»</span><span class="hint">нажмите, чтобы перевести</span></button><button type="button" class="biz"><span class="lang">Язык бизнеса</span><span class="txt" data-b="Сделайте как у конкурентов" data-d="Нужны требования: что именно, для кого и как поймём, что готово.">«Сделайте как у конкурентов»</span><span class="hint">нажмите, чтобы перевести</span></button><button type="button" class="biz"><span class="lang">Язык бизнеса</span><span class="txt" data-b="Мы же это обсуждали" data-d="В задаче этого нет. Допишем в описание, чтобы не терять.">«Мы же это обсуждали»</span><span class="hint">нажмите, чтобы перевести</span></button><button type="button" class="biz"><span class="lang">Язык бизнеса</span><span class="txt" data-b="Давайте без бюрократии" data-d="Достаточно одного абзаца: что делаем, зачем и кто принимает.">«Давайте без бюрократии»</span><span class="hint">нажмите, чтобы перевести</span></button><button type="button" class="biz"><span class="lang">Язык бизнеса</span><span class="txt" data-b="Просто поправьте текст" data-d="Надо проверить локализации на всех языках до выхода билда.">«Просто поправьте текст»</span><span class="hint">нажмите, чтобы перевести</span></button><button type="button" class="biz"><span class="lang">Язык бизнеса</span><span class="txt" data-b="Релиз будет, когда будет готово" data-d="Назовите дату, и разберём, что в неё влезает, а что уходит в следующий спринт.">«Релиз будет, когда будет готово»</span><span class="hint">нажмите, чтобы перевести</span></button></div>
     </section>
 
     <section id="projects">
@@ -431,6 +446,14 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-bet
       var done=function(){btn.textContent='Скопировано';setTimeout(function(){btn.textContent='Копировать';},1500);};
       var fallback=function(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Выделено';};
       if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,fallback);}else{fallback();}
+    });
+  });
+  document.querySelectorAll('.tr button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.querySelector('.txt'),l=b.querySelector('.lang'),h=b.querySelector('.hint'),dev=b.classList.toggle('dev');
+      t.textContent=dev?t.dataset.d:'«'+t.dataset.b+'»';
+      l.textContent=dev?'Язык разработки':'Язык бизнеса';
+      h.textContent=dev?'нажмите, чтобы вернуть':'нажмите, чтобы перевести';
     });
   });
   var links=[].slice.call(document.querySelectorAll('#nav a'));
